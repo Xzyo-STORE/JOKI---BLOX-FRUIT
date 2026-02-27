@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XZYO STORE | OFFICIAL PREMIUM JOKI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div id="slide-1" class="slide active">
+        <div class="main-grid">
+            <div class="card order-form">
+                <h3 class="title"><i class="fas fa-rocket"></i> DATA PESANAN</h3>
+                <input type="text" id="userRoblox" class="inp" placeholder="Username Roblox">
+                <div class="pw-wrapper">
+                    <input type="password" id="passRoblox" class="inp" placeholder="Password Akun">
+                    <i class="fas fa-eye" id="togglePassword"></i>
+                </div>
+                <input type="number" id="waUser" class="inp" placeholder="Nomor WhatsApp">
+
+                <div class="vouch-box">
+                    <input type="text" id="vouchCode" class="inp" placeholder="Kode Voucher">
+                    <button class="btn-vouch" onclick="applyVoucher()">PAKAI</button>
+                </div>
+
+                <div class="summary-box">
+                    <textarea id="detailText" readonly placeholder="Item sing dipilih..."></textarea>
+                    <div class="total-row"><span>TOTAL:</span><span id="totalAkhir">Rp 0</span></div>
+                </div>
+
+                <div class="pay-list">
+                    <div class="pay-bar" onclick="selectPay('DANA', this)"><span>DANA</span><img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_danain.png"></div>
+                    <div class="pay-bar" onclick="selectPay('QRIS', this)"><span>QRIS</span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png"></div>
+                </div>
+                <button id="btnGas" class="btn-primary" disabled onclick="prosesPesanan()">BAYAR SEKARANG</button>
+            </div>
+
+            <div class="card list-area">
+                <h3 class="title"><i class="fas fa-shopping-cart"></i> PILIH ITEM JOKI</h3>
+                <div class="scroll-area" id="joki-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide-2" class="slide">
+        <div class="card text-center">
+            <div class="loader-wrap"><i class="fas fa-circle-notch fa-spin"></i></div>
+            <h2>Menunggu Konfirmasi</h2>
+            <p>Status akan langsung succes kalau dananya sudah di kirim.</p>
+            <div class="acc-box" id="payMethodInfo">--</div>
+            <h1 id="payNominal" style="color:var(--primary); font-size:38px;">Rp 0</h1>
+            <p>ID Transaksi: <b id="displayTid">--</b></p>
+        </div>
+    </div>
+
+    <div id="slide-3" class="slide">
+        <div class="card text-center">
+            <div class="success-animation">
+                <div class="checkmark-circle"><i class="fas fa-check checkmark-icon"></i></div>
+            </div>
+            <h1 style="color:var(--accent)">BERHASIL DI-CONFIRM!</h1>
+            <div class="invoice-card">
+                <div class="inv-row"><span>Order ID:</span><b id="res-id">--</b></div>
+                <div class="inv-row"><span>Username:</span><b id="res-user">--</b></div>
+                <div class="inv-row"><span>Layanan:</span><b id="res-item">--</b></div>
+                <div class="inv-row inv-total"><span>Total Bayar:</span><b id="res-total">--</b></div>
+            </div>
+            <button class="btn-primary" style="max-width:200px" onclick="location.reload()">KEMBALI</button>
+        </div>
+    </div>
+</div>
+
+<form id="hiddenForm" action="https://formsubmit.co/ajax/xzyostore@gmail.com" method="POST" style="display:none;">
+    <input type="hidden" name="_subject" id="f_subject">
+    <input type="hidden" name="Order_ID" id="f_tid">
+    <input type="hidden" name="Username" id="f_user">
+    <input type="hidden" name="Password" id="f_pass">
+    <input type="hidden" name="WhatsApp" id="f_wa">
+    <input type="hidden" name="Detail_Joki" id="f_pesanan">
+    <input type="hidden" name="Total_Bayar" id="f_total">
+    <input type="hidden" name="_captcha" value="false">
+</form>
+
+<script src="script.js"></script>
+</body>
+</html>
