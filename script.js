@@ -93,7 +93,7 @@ function init() {
     box.innerHTML = ""; 
     MENU_JOKI.forEach((item, index) => {
         if (item.header) {
-            box.innerHTML += `<div class="item-header" style="background:#2c3e50; color:#fff; padding:10px; margin-top:10px; font-weight:bold; border-radius:12px; text-align:center;">${item.n}</div>`;
+            box.innerHTML += `<div class="item-header" style="background:#2c3e50; color:#fff; padding:10px; margin-top:10px; font-weight:bold; border-radius:12px; text-align:center; font-size:13px;">${item.n}</div>`;
         } else {
             box.innerHTML += `
             <div class="item-joki-cart" id="item-${index}" style="display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--inactive); margin-bottom:8px; border-radius:15px; border:1px solid var(--border);">
@@ -118,8 +118,10 @@ function updateCart(index, delta) {
 
     document.getElementById(`qty-${index}`).innerText = cart[index];
     const el = document.getElementById(`item-${index}`);
-    el.style.borderColor = cart[index] > 0 ? "var(--primary)" : "var(--border)";
-    el.style.background = cart[index] > 0 ? "rgba(0, 210, 255, 0.05)" : "var(--inactive)";
+    if(el) {
+        el.style.borderColor = cart[index] > 0 ? "var(--primary)" : "var(--border)";
+        el.style.background = cart[index] > 0 ? "rgba(0, 210, 255, 0.05)" : "var(--inactive)";
+    }
     hitung();
 }
 
@@ -163,7 +165,7 @@ function updateBtn() {
     document.getElementById('btnGas').disabled = !(u && hasItems && selectedPay);
 }
 
-// 5. Proses Pesanan
+// Proses Pesanan
 async function prosesPesanan() {
     const loader = document.getElementById('loading-overlay');
     loader.style.display = 'flex';
@@ -191,27 +193,28 @@ async function prosesPesanan() {
 
             const qrisBox = document.getElementById('qris-display');
             const infoTeks = document.getElementById('payMethodInfo');
+            const gbrQR = document.getElementById('gambar-qris');
             
-            // LINK QRIS ASLI KAMU
             const linkQRIS = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
 
             if (selectedPay === "QRIS") {
-                infoTeks.innerText = "SCAN QRIS XZYO STORE";
-                qrisBox.innerHTML = `<p style="color:black; font-weight:800; margin-bottom:10px; font-size:12px;">SCAN QRIS XZYO STORE</p>
-                                     <img src="${linkQRIS}" id="gambar-qris" style="width:100%; max-width:200px; height:auto; display:block; margin:0 auto; border-radius:10px;">`;
-                qrisBox.classList.add('show-qr'); // Pakai class dari CSS tadi
+                infoTeks.innerText = "SILAKAN SCAN QRIS DI BAWAH";
+                gbrQR.src = linkQRIS; // Fix: Isi source gambarnya langsung
+                qrisBox.classList.add('show-qr'); 
             } 
             else {
                 qrisBox.classList.remove('show-qr');
-                qrisBox.innerHTML = "";
                 if (selectedPay === "DANA") {
                     infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
-                } else {
-                    infoTeks.innerText = selectedPay + ": 089517154561 (A/N REZA)";
+                } else if (selectedPay === "OVO") {
+                    infoTeks.innerText = "OVO: 089517154561 (A/N REZA)";
+                } else if (selectedPay === "GOPAY") {
+                    infoTeks.innerText = "GOPAY: 089517154561 (A/N REZA)";
                 }
             }
         }, 1200);
 
+        // Listener buat update otomatis kalau admin ganti status di Firebase
         db.ref('orders/' + currentTid + '/status').on('value', snap => {
             if(snap.val() === 'success') {
                 tampilkanSlide3(currentTid, u, itm, tot);
@@ -246,13 +249,18 @@ function tampilkanSlide3(tid, u, itm, tot) {
 
 function switchSlide(from, to) {
     document.getElementById('slide-' + from).classList.remove('active');
-    setTimeout(() => { document.getElementById('slide-' + to).classList.add('active'); }, 100);
+    setTimeout(() => { document.getElementById('slide-' + to).classList.add('active'); }, 150);
 }
 
 document.getElementById('togglePassword').onclick = function() {
     const p = document.getElementById('passRoblox');
-    p.type = p.type === 'password' ? 'text' : 'password';
-    this.classList.toggle('fa-eye-slash');
+    if(p.type === 'password') {
+        p.type = 'text';
+        this.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        p.type = 'password';
+        this.classList.replace('fa-eye-slash', 'fa-eye');
+    }
 };
 
 window.onload = init;
