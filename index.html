@@ -66,15 +66,24 @@
     </div>
 
     <div id="slide-2" class="slide">
-        <div class="card text-center">
-            <div class="loader-wrap"><i class="fas fa-circle-notch fa-spin"></i></div>
-            <h2>Menunggu Konfirmasi</h2>
-            <p>Status akan langsung succes kalau dananya sudah di kirim.</p>
-            <div class="acc-box" id="payMethodInfo">--</div>
-            <h1 id="payNominal" style="color:var(--primary); font-size:38px;">Rp 0</h1>
-            <p>ID Transaksi: <b id="displayTid">--</b></p>
+    <div class="card text-center">
+        <div class="loader-wrap"><i class="fas fa-qrcode"></i></div>
+        <h2 class="title">Selesaikan Pembayaran</h2>
+        
+        <div class="invoice-card">
+            <div class="inv-row"><span>Order ID:</span> <b id="displayTid"></b></div>
+            <div class="inv-row"><span>Total:</span> <b id="payNominal" style="color:var(--primary)"></b></div>
+            <div class="inv-row"><span>Metode:</span> <b id="payMethodInfo"></b></div>
         </div>
+
+        <div id="qris-display" style="display:none; background:white; padding:15px; border-radius:15px; margin: 15px 0;">
+            <p style="color:black; font-weight:800; margin-bottom:10px; font-size:12px;">SCAN QRIS XZYO STORE</p>
+            <img id="gambar-qris" src="LINK_QRIS_KAMU_DISINI" style="width:100%; max-width:200px; height:auto;">
+        </div>
+
+        <p style="font-size:12px; color:#8b949e;">Silakan transfer sesuai nominal, lalu tunggu admin memproses pesananmu.</p>
     </div>
+</div>
 
     <div id="slide-3" class="slide">
         <div class="card text-center">
@@ -108,3 +117,4 @@
 </body>
 
 </html>
+
