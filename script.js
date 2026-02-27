@@ -195,21 +195,31 @@ async function prosesPesanan() {
             const infoTeks = document.getElementById('payMethodInfo');
             const gbrQR = document.getElementById('gambar-qris');
             
+            // Link gambar kamu
             const linkQRIS = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
 
             if (selectedPay === "QRIS") {
+                console.log("Memilih QRIS, mencoba menampilkan..."); // Cek di console F12
                 infoTeks.innerText = "SILAKAN SCAN QRIS DI BAWAH";
-                gbrQR.src = linkQRIS; // Fix: Isi source gambarnya langsung
+                
+                if (gbrQR) {
+                    gbrQR.src = linkQRIS;
+                    console.log("Link gambar diset ke: " + gbrQR.src);
+                }
+                
                 qrisBox.classList.add('show-qr'); 
+                qrisBox.style.display = "block"; // Paksa muncul lewat JS
             } 
             else {
                 qrisBox.classList.remove('show-qr');
+                qrisBox.style.display = "none"; // Sembunyikan jika bukan QRIS
+                
                 if (selectedPay === "DANA") {
-                    infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
+                    infoTeks.innerText = "DANA: 089677323404";
                 } else if (selectedPay === "OVO") {
-                    infoTeks.innerText = "OVO: 089517154561 (A/N REZA)";
+                    infoTeks.innerText = "OVO: 089517154561";
                 } else if (selectedPay === "GOPAY") {
-                    infoTeks.innerText = "GOPAY: 089517154561 (A/N REZA)";
+                    infoTeks.innerText = "GOPAY: 089517154561";
                 }
             }
         }, 1200);
@@ -264,3 +274,4 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
