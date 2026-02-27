@@ -41,7 +41,7 @@ body {
 }
 
 .slide.active { 
-    display: block; 
+    display: block !important; 
     opacity: 1; 
     transform: translateY(0); 
 }
@@ -99,12 +99,13 @@ body {
     box-shadow: 0 0 10px var(--shadow); 
 }
 
+/* --- PASSWORD WRAPPER --- */
 .pw-wrapper { position: relative; }
 #togglePassword { 
     position: absolute; 
     right: 15px; 
-    top: 40%; 
-    transform: translateY(-50%); 
+    top: 50%; 
+    transform: translateY(-80%); 
     cursor: pointer; 
     color: #484f58; 
     z-index: 5;
@@ -138,7 +139,7 @@ textarea {
     color: white; resize: none; font-family: inherit; font-size: 13px; 
 }
 
-/* --- PAYMENT LIST --- */
+/* --- PAYMENT LIST & NEON EFFECT --- */
 .pay-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
 .pay-bar { 
     background: #1c2128; 
@@ -154,13 +155,42 @@ textarea {
 }
 
 .pay-bar:hover { border-color: #444c56; background: #22272e; }
+
+/* EFEK NEON PULSE PAS DIPILIH */
 .pay-bar.selected { 
     border-color: var(--primary); 
-    background: rgba(0, 210, 255, 0.08); 
-    transform: translateX(5px);
+    background: rgba(0, 210, 255, 0.1); 
+    transform: translateX(8px);
+    box-shadow: 0 0 15px var(--shadow), inset 0 0 10px var(--shadow);
+    animation: neonPulse 1.5s infinite alternate;
+    position: relative;
+    overflow: hidden;
 }
 
-.pay-bar img { height: 20px; width: auto; filter: grayscale(0.2); }
+/* Efek kilatan cahaya */
+.pay-bar.selected::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes neonPulse {
+    from { box-shadow: 0 0 5px var(--primary), inset 0 0 2px var(--primary); }
+    to { box-shadow: 0 0 20px var(--primary), inset 0 0 8px var(--primary); }
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.pay-bar img { height: 20px; width: auto; }
 
 /* --- BUTTONS --- */
 .btn-primary { 
@@ -174,7 +204,6 @@ textarea {
     box-shadow: 0 12px 25px rgba(0, 210, 255, 0.4); 
 }
 
-.btn-primary:active { transform: scale(0.97); }
 .btn-primary:disabled { background: #21262d; color: #484f58; box-shadow: none; cursor: not-allowed; }
 
 /* --- JOKI LIST ITEM --- */
@@ -182,7 +211,7 @@ textarea {
 .scroll-area::-webkit-scrollbar { width: 5px; }
 .scroll-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-/* --- QRIS DISPLAY (FIXED) --- */
+/* --- QRIS DISPLAY --- */
 #qris-display {
     display: none;
     max-width: 280px;
@@ -191,14 +220,6 @@ textarea {
     padding: 20px;
     border-radius: 24px;
     text-align: center;
-    box-shadow: 0 0 40px rgba(255,255,255,0.05);
-}
-
-#qris-display.show-qr { display: block; animation: fadeIn 0.5s ease; }
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
 }
 
 /* --- INVOICE --- */
@@ -221,6 +242,18 @@ textarea {
 }
 
 /* --- LOADING OVERLAY --- */
+#loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(1, 4, 9, 0.95);
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .loader-spinner {
     width: 50px; height: 50px;
     border: 5px solid var(--inactive);
@@ -228,25 +261,21 @@ textarea {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* --- SUCCESS CHECKMARK ANIMATION --- */
-.success-animation { margin: 30px auto; }
+.success-animation { margin: 30px auto; display: flex; justify-content: center; }
 .checkmark-circle {
     width: 80px; height: 80px;
     stroke-width: 2; stroke: var(--accent);
-    stroke-miterlimit: 10;
     fill: none;
-    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 .checkmark-circle-path {
     stroke-dasharray: 166; stroke-dashoffset: 166;
-    stroke-width: 2; stroke-miterlimit: 10;
-    stroke: var(--accent); fill: none;
+    stroke-width: 2; stroke: var(--accent);
     animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 .checkmark-check {
-    transform-origin: 50% 50%;
     stroke-dasharray: 48; stroke-dashoffset: 48;
     animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 }
