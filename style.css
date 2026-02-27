@@ -1,15 +1,20 @@
 /* --- CONFIG DASAR --- */
 :root { 
-    --bg:#010409; 
-    --card:#0d1117; 
-    --primary:#00d2ff; 
-    --accent:#10b981; 
-    --text:#f0f6fc; 
-    --border:#30363d; 
-    --inactive:#161b22; 
+    --bg: #010409; 
+    --card: #0d1117; 
+    --primary: #00d2ff; 
+    --accent: #10b981; 
+    --text: #f0f6fc; 
+    --border: #30363d; 
+    --inactive: #161b22; 
+    --shadow: rgba(0, 210, 255, 0.15);
 }
 
-* { box-sizing: border-box; outline: none; }
+* { 
+    box-sizing: border-box; 
+    outline: none; 
+    -webkit-tap-highlight-color: transparent;
+}
 
 body { 
     background: var(--bg); 
@@ -18,17 +23,23 @@ body {
     margin: 0; 
     padding: 15px; 
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
-.container { max-width: 1100px; margin: auto; }
+.container { 
+    max-width: 1100px; 
+    margin: auto; 
+    padding-top: 20px;
+}
 
-/* --- SLIDE SYSTEM (Dibuat Halus) --- */
+/* --- SLIDE SYSTEM --- */
 .slide { 
     display: none; 
     opacity: 0; 
-    transform: translateY(10px); 
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    transform: translateY(20px); 
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
 }
+
 .slide.active { 
     display: block; 
     opacity: 1; 
@@ -36,7 +47,13 @@ body {
 }
 
 /* --- GRID SYSTEM --- */
-.main-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; align-items: start; }
+.main-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1.2fr; 
+    gap: 20px; 
+    align-items: start; 
+}
+
 @media (max-width: 850px) { 
     .main-grid { display: flex; flex-direction: column; } 
     .order-form { order: 1; }
@@ -49,15 +66,17 @@ body {
     padding: 25px; 
     border-radius: 24px; 
     border: 1px solid var(--border); 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    position: relative;
 }
+
 .title { 
     color: var(--primary); 
     font-weight: 800; 
     text-transform: uppercase; 
     font-size: 14px; 
     margin-bottom: 20px; 
-    letter-spacing: 1px; 
+    letter-spacing: 1.5px; 
     display: flex; 
     align-items: center; 
     gap: 10px;
@@ -72,20 +91,26 @@ body {
     color: white; 
     border: 1px solid var(--border); 
     font-family: inherit;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
-.inp:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(0, 210, 255, 0.1); }
+
+.inp:focus { 
+    border-color: var(--primary); 
+    box-shadow: 0 0 10px var(--shadow); 
+}
 
 .pw-wrapper { position: relative; }
 #togglePassword { 
     position: absolute; 
     right: 15px; 
-    top: 50%; 
+    top: 40%; 
     transform: translateY(-50%); 
-    margin-top: -6px; /* Offset margin-bottom input */
     cursor: pointer; 
     color: #484f58; 
+    z-index: 5;
+    transition: 0.2s;
 }
+#togglePassword:hover { color: var(--primary); }
 
 .vouch-box { display: flex; gap: 8px; margin-bottom: 15px; }
 .btn-vouch { 
@@ -96,9 +121,18 @@ body {
     border-radius: 12px; 
     cursor: pointer; 
     font-weight: 800; 
+    transition: 0.2s;
+}
+.btn-vouch:hover { background: var(--border); }
+
+.summary-box { 
+    background: var(--inactive); 
+    padding: 15px; 
+    border-radius: 18px; 
+    margin-bottom: 20px; 
+    border: 1px solid var(--border); 
 }
 
-.summary-box { background: var(--inactive); padding: 15px; border-radius: 18px; margin-bottom: 20px; border: 1px solid var(--border); }
 textarea { 
     width: 100%; height: 60px; background: transparent; border: none; 
     color: white; resize: none; font-family: inherit; font-size: 13px; 
@@ -118,54 +152,53 @@ textarea {
     font-weight: 800; 
     transition: 0.3s ease; 
 }
-.pay-bar:hover { background: #22272e; border-color: #444c56; }
+
+.pay-bar:hover { border-color: #444c56; background: #22272e; }
 .pay-bar.selected { 
     border-color: var(--primary); 
-    background: rgba(0, 210, 255, 0.1); 
-    transform: scale(1.02);
+    background: rgba(0, 210, 255, 0.08); 
+    transform: translateX(5px);
 }
-.pay-bar img { height: 20px; width: auto; filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); }
+
+.pay-bar img { height: 20px; width: auto; filter: grayscale(0.2); }
 
 /* --- BUTTONS --- */
 .btn-primary { 
     width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 18px; 
     font-weight: 800; cursor: pointer; text-transform: uppercase; color: #000; 
-    box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2); transition: 0.3s;
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.2); transition: 0.3s ease;
 }
-.btn-primary:active { transform: scale(0.98); }
+
+.btn-primary:hover:not(:disabled) { 
+    transform: translateY(-3px); 
+    box-shadow: 0 12px 25px rgba(0, 210, 255, 0.4); 
+}
+
+.btn-primary:active { transform: scale(0.97); }
 .btn-primary:disabled { background: #21262d; color: #484f58; box-shadow: none; cursor: not-allowed; }
 
 /* --- JOKI LIST ITEM --- */
-.scroll-area { max-height: 520px; overflow-y: auto; padding-right: 5px; }
-.scroll-area::-webkit-scrollbar { width: 4px; }
+.scroll-area { max-height: 520px; overflow-y: auto; padding-right: 8px; }
+.scroll-area::-webkit-scrollbar { width: 5px; }
 .scroll-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
-.item-joki-cart { transition: 0.3s; }
-.item-joki-cart button { cursor: pointer; transition: 0.2s; }
-.item-joki-cart button:hover { opacity: 0.8; }
 
 /* --- QRIS DISPLAY (FIXED) --- */
 #qris-display {
-    display: none; /* Default sembunyi */
-    max-width: 260px;
+    display: none;
+    max-width: 280px;
     margin: 20px auto;
-    background: #ffffff; /* Paksa putih biar QR kebaca */
+    background: #ffffff; 
     padding: 20px;
     border-radius: 24px;
     text-align: center;
-    box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(255,255,255,0.05);
 }
 
-/* Class ini akan dipanggil JS untuk munculin QR */
-.show-qr {
-    display: block !important;
-}
+#qris-display.show-qr { display: block; animation: fadeIn 0.5s ease; }
 
-#gambar-qris { 
-    width: 100%; 
-    height: auto; 
-    display: block; 
-    border-radius: 12px;
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 /* --- INVOICE --- */
@@ -182,12 +215,12 @@ textarea {
 .inv-total { 
     border-top: 2px dashed var(--border); 
     padding-top: 15px; 
-    color: var(--accent); 
+    color: var(--primary); 
     font-weight: 800; 
     font-size: 20px; 
 }
 
-/* --- ANIMATIONS --- */
+/* --- LOADING OVERLAY --- */
 .loader-spinner {
     width: 50px; height: 50px;
     border: 5px solid var(--inactive);
@@ -196,5 +229,27 @@ textarea {
     animation: spin 1s linear infinite;
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* --- SUCCESS CHECKMARK ANIMATION --- */
+.success-animation { margin: 30px auto; }
+.checkmark-circle {
+    width: 80px; height: 80px;
+    stroke-width: 2; stroke: var(--accent);
+    stroke-miterlimit: 10;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+.checkmark-circle-path {
+    stroke-dasharray: 166; stroke-dashoffset: 166;
+    stroke-width: 2; stroke-miterlimit: 10;
+    stroke: var(--accent); fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+.checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48; stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+@keyframes stroke { 100% { stroke-dashoffset: 0; } }
 
 .text-center { text-align: center; }
