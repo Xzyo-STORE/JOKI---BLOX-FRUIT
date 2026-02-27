@@ -17,7 +17,7 @@ const TELE_CHAT_ID = "6076444140";
 
 const MENU_JOKI = [
     // --- KEN HAKI ---
-    { n: "👁️ KEN HAKI (INSTINCT)", p: 0, header: false },
+    { n: "👁️ KEN HAKI (INSTINCT)", header: true },
     { n: "✦ 0 – 1.000", p: 5000 },
     { n: "✦ 1.000 – 2.000", p: 8000 },
     { n: "✦ 2.000 – 5.000 (MAX) + V2(Full)", p: 15000 },
@@ -259,6 +259,7 @@ document.getElementById('togglePassword').onclick = function() {
 
 
 window.onload = init;
+
 
 
 
