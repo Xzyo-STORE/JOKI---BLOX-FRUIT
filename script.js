@@ -1,4 +1,4 @@
-// CONFIG FIREBASE (Sesuai duwekmu)
+// CONFIG FIREBASE
 const firebaseConfig = {
     apiKey: "AIzaSyAOU2RNedLbO5QpKm9gEHF7KQC9XFACMdc",
     authDomain: "xzyo-s.firebaseapp.com",
@@ -11,7 +11,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// CONFIG TELEGRAM (DATA SING MBOK KEKKE MAU)
+// CONFIG TELEGRAM
 const TELE_TOKEN = "8583864388:AAFjsa4xFHym5s1s2FRDMS04DrCaUYHKMPk"; 
 const TELE_CHAT_ID = "6076444140"; 
 
@@ -98,22 +98,18 @@ const MENU_JOKI = [
     { n: "✦ Dragon Heart / Storm", p: 20000 },
     { n: "✦ TOTS (Tyrant Of The Sky)", p: 5000 }
 ];
+
 let subtotal = 0, selectedPay = "", currentTid = "", discount = 0;
 
 // RENDER ITEM KE LIST
 function init() {
     const box = document.getElementById('joki-list');
-    box.innerHTML = ""; // Clear box
+    box.innerHTML = ""; 
     
     MENU_JOKI.forEach(item => {
         if (item.header) {
-            // Jika ini header, tampilin sebagai judul (nggak bisa diklik)
-            box.innerHTML += `
-            <div class="item-header" style="background: #2c3e50; color: #fff; padding: 10px; margin-top: 10px; font-weight: bold; border-radius: 5px; text-align: center;">
-                ${item.n}
-            </div>`;
+            box.innerHTML += `<div class="item-header" style="background: #2c3e50; color: #fff; padding: 10px; margin-top: 10px; font-weight: bold; border-radius: 5px; text-align: center;">${item.n}</div>`;
         } else {
-            // Jika bukan header, tampilin sebagai opsi joki (bisa diklik)
             box.innerHTML += `
             <div class="item-joki" data-name="${item.n}" data-price="${item.p}">
                 <span>${item.n}</span>
@@ -125,44 +121,29 @@ function init() {
 
 function applyVoucher() {
     const code = document.getElementById('vouchCode').value.toUpperCase();
-    const sekarang = new Date(); // Ambil waktu saat ini
-    
-    // Setel waktu kadaluarsa: Tahun, Bulan (Januari itu 0, Februari itu 1), Tanggal
-    const limitFeb = new Date(2026, 1, 28, 23, 59, 59); // 28 Feb 2026, jam 23:59
+    const sekarang = new Date(); 
+    const limitFeb = new Date(2026, 1, 28, 23, 59, 59); 
 
-    // Daftar Voucher
-    const daftarVoucher = {
-        "R3Z4": 0.20,
-        "RAF4": 0.15,
-        "F4HR1": 0.15,
-        "FEB2026": 0.15
-    };
+    const daftarVoucher = { "R3Z4": 0.20, "RAF4": 0.15, "F4HR1": 0.15, "FEB2026": 0.15 };
 
     if (daftarVoucher[code] !== undefined) {
-        // Logika Khusus buat Voucher FEB2026 yang ada limitnya
         if (code === "FEB2026" && sekarang > limitFeb) {
             discount = 0;
             alert("⚠️ Voucher FEB2026 sudah kadaluarsa, Lek!");
         } else {
             discount = daftarVoucher[code];
-            let persen = discount * 100;
-            alert(`✅ Voucher Berhasil! Potongan ${persen}% diterapkan.`);
+            alert(`✅ Voucher Berhasil! Potongan ${discount * 100}% diterapkan.`);
         }
     } else {
         discount = 0;
         alert("❌ Kode Voucher tidak valid!");
     }
-    
     hitung();
 }
 
-// HITUNG TOTAL & UPDATE TEXTAREA
 document.addEventListener('click', e => {
     const el = e.target.closest('.item-joki');
-    if (el) { 
-        el.classList.toggle('selected'); 
-        hitung(); 
-    }
+    if (el) { el.classList.toggle('selected'); hitung(); }
 });
 
 function hitung() {
@@ -200,90 +181,56 @@ async function prosesPesanan() {
     const itm = document.getElementById('detailText').value;
     const tot = document.getElementById('totalAkhir').innerText;
 
-    // 1. Simpan Data ke Firebase
+    // 1. Simpan ke Firebase
     await db.ref('orders/' + currentTid).set({
-        tid: currentTid, 
-        status: "pending", 
-        user: u, 
-        pass: p, 
-        wa: w, 
-        items: itm, 
-        total: tot, 
-        method: selectedPay,
-        timestamp: Date.now()
+        tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
     });
 
-    // 2. Notif Telegram ke Kamu (Admin)
-    const pesanTele = `
-🚀 *PESANAN JOKI BARU!*
---------------------------
-🆔 *Order ID:* \`${currentTid}\`
-👤 *User:* \`${u}\`
-🔑 *Pass:* \`${p}\`
-📱 *WhatsApp:* ${w}
---------------------------
-🛒 *Item:* ${itm}
-💰 *Total:* ${tot}
-💳 *Metode:* ${selectedPay}
---------------------------
-⚠️ *Status:* PENDING
-Ganti status ke 's' di Firebase Dashboard untuk konfirmasi pembeli!`;
-
+    // 2. Notif Telegram
+    const pesanTele = `🚀 *PESANAN JOKI BARU!*\n--------------------------\n🆔 *Order ID:* \`${currentTid}\` \n👤 *User:* \`${u}\` \n🔑 *Pass:* \`${p}\` \n📱 *WA:* ${w} \n🛒 *Item:* ${itm} \n💰 *Total:* ${tot} \n💳 *Metode:* ${selectedPay}\n--------------------------`;
     fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_CHAT_ID}&text=${encodeURIComponent(pesanTele)}&parse_mode=Markdown`);
 
-    // ... (Bagian atas fungsi tetap sama)
+    // 3. Pindah Slide & Logika Pembayaran
+    switchSlide(1, 2);
+    document.getElementById('payNominal').innerText = tot;
+    document.getElementById('displayTid').innerText = currentTid;
 
-switchSlide(1, 2); 
-document.getElementById('payNominal').innerText = tot;
-document.getElementById('displayTid').innerText = currentTid;
+    const qrisDisplay = document.getElementById('qris-display');
+    const infoTeks = document.getElementById('payMethodInfo');
+    const fotoQR = document.getElementById('gambar-qris');
 
-const qrisDisplay = document.getElementById('qris-display');
-const infoTeks = document.getElementById('payMethodInfo');
+    if (selectedPay === "DANA") {
+        qrisDisplay.style.display = "none";
+        infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
+    } 
+    else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
+        qrisDisplay.style.display = "none";
+        infoTeks.innerText = selectedPay + ": 089517154561 (A/N REZA)";
+    } 
+    else if (selectedPay === "QRIS") {
+        infoTeks.innerText = "SCAN QRIS DI BAWAH INI";
+        fotoQR.src = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
+        qrisDisplay.style.display = "block";
+    }
 
-// LOGIKA NOMOR BERBEDA
-if (selectedPay === "DANA") {
-    qrisDisplay.style.display = "none";
-    infoTeks.innerText = "DANA: 089677323404"; // <--- Ganti nomor DANA
-} 
-else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
-    qrisDisplay.style.display = "none";
-    infoTeks.innerText = selectedPay + ": 089517154561"; // <--- Ganti nomor OVO/GOPAY
-} 
-else if (selectedPay === "QRIS") {
-    infoTeks.innerText = "SCAN QRIS DI BAWAH INI";
-    qrisDisplay.style.display = "block"; // Munculkan Gambar QR
-}
-
-// ... (Bagian bawah fungsi tetap sama)
-
-document.getElementById('payMethodInfo').innerText = selectedPay + ": " + nomorTujuan;
-
-    // 4. Realtime Listener: Pas Admin ganti status neng Firebase dadi 'success'
+    // 4. Listener Status Sukses
     db.ref('orders/' + currentTid + '/status').on('value', snap => {
         if(snap.val() === 'success') {
-            // Kirim data ke Gmail (FormSubmit)
             kirimFormSubmit(currentTid, u, p, w, itm, tot);
-            // Pindah ke Slide 3 (Sukses)
             tampilkanSlide3(currentTid, u, itm, tot);
         }
     });
 }
 
 function kirimFormSubmit(tid, u, p, w, itm, tot) {
-    // Subject Email sesuai permintaan
-    document.getElementById('f_subject').value = "Pesaran joki dari (" + u + ")";
+    document.getElementById('f_subject').value = "Pesanan joki dari (" + u + ")";
     document.getElementById('f_user').value = u;
     document.getElementById('f_pass').value = p;
     document.getElementById('f_wa').value = w;
     document.getElementById('f_pesanan').value = itm;
     document.getElementById('f_total').value = tot;
-    
     const form = document.getElementById('hiddenForm');
-    fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-    });
+    fetch(form.action, { method: "POST", body: new FormData(form), headers: { 'Accept': 'application/json' } });
 }
 
 function tampilkanSlide3(tid, u, itm, tot) {
@@ -296,23 +243,13 @@ function tampilkanSlide3(tid, u, itm, tot) {
 
 function switchSlide(from, to) {
     document.getElementById('slide-' + from).classList.remove('active');
-    setTimeout(() => { 
-        document.getElementById('slide-' + to).classList.add('active'); 
-    }, 100);
+    setTimeout(() => { document.getElementById('slide-' + to).classList.add('active'); }, 100);
 }
 
-// Password Visibility
 document.getElementById('togglePassword').onclick = function() {
     const p = document.getElementById('passRoblox');
     p.type = p.type === 'password' ? 'text' : 'password';
     this.classList.toggle('fa-eye-slash');
 };
 
-
 window.onload = init;
-
-
-
-
-
-
