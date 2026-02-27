@@ -15,13 +15,88 @@ const db = firebase.database();
 const TELE_TOKEN = "8583864388:AAFjsa4xFHym5s1s2FRDMS04DrCaUYHKMPk"; 
 const TELE_CHAT_ID = "6076444140"; 
 
-const MENU_JOKI = [
-    { n: "Lvl 1-700", p: 35000 }, 
-    { n: "Lvl 700-1500", p: 55000 },
-    { n: "Lvl 1-Max", p: 120000 }, 
-    { n: "Full Haki", p: 20000 },
-    { n: "Cursed Dual Katana", p: 150000 },
-    { n: "Soul Guitar", p: 100000 }
+const menu = [
+    // --- KEN HAKI ---
+    { n: "👁️ KEN HAKI (INSTINCT)", p: 0, header: true },
+    { n: "✦ 0 – 1.000", p: 5000 },
+    { n: "✦ 1.000 – 2.000", p: 8000 },
+    { n: "✦ 2.000 – 5.000 (MAX) + V2(Full)", p: 15000 },
+    { n: "✦ 0 – 5.000 (MAX) + V2(Full)", p: 20000 },
+
+    // --- BOUNTY ---
+    { n: "🏴‍☠️ JOKI BOUNTY / HONOR", p: 0, header: true },
+    { n: "✦ 1M Bounty / Honor", p: 20000 },
+    { n: "✦ 5M Bounty / Honor", p: 90000 },
+    { n: "✦ 10M Bounty / Honor", p: 180000 },
+    { n: "✦ 30M Bounty (MAX)", p: 0 },
+
+    // --- CURRENCY ---
+    { n: "💸 JOKI BELLY & FRAGMENT", p: 0, header: true },
+    { n: "✦ Belly 1M - 10M", p: 5000 },
+    { n: "✦ Belly 50M (Paket Sultan)", p: 0 },
+    { n: "✦ Fragment 1K - 10K", p: 1000 },
+    { n: "✦ Fragment 50K (Full Awakening Ready)", p: 0 },
+
+    // --- LEVEL ---
+    { n: "🔥 JOKI LEVEL & SEA", p: 0, header: true },
+    { n: "✦ Level 1 – 700 (Sea 1)", p: 15000 },
+    { n: "✦ Level 700 – 1500 (Sea 2)", p: 15000 },
+    { n: "✦ Level 1500 – MAX (Sea 3)", p: 20000 },
+    { n: "✦ Paket Level 1 - MAX", p: 0 },
+    { n: "✦ Unlock Sea 2 / 3", p: 5000 },
+
+    // --- FIGHTING STYLE ---
+    { n: "👊 FIGHTING STYLE (MELEE)", p: 0, header: true },
+    { n: "✦ Sanguine Art (Full)", p: 0 },
+    { n: "✦ God Human (Full)", p: 30000 },
+    { n: "✦ Superhuman / Death Step", p: 0 },
+    { n: "✦ Sharkman Karate / Dragon Talon", p: 0 },
+    { n: "✦ Electric Claw", p: 0 },
+
+    // --- WEAPONS & BOSS ---
+    { n: "⚔️ BOSS • WEAPON • EXCLUSIVE", p: 0, header: true },
+    { n: "✦ CDK (Cursed Dual Katana)", p: 20000 },
+    { n: "✦ Soul Guitar (Full Quest)", p: 10000 },
+    { n: "✦ TTK (True Triple Katana)", p: 25000 },
+    { n: "✦ Shark Anchor (Full)", p: 30000 },
+    { n: "✦ Fox Lamp (Kitsune)", p: 30000 },
+    { n: "✦ Tushita / Yama", p: 8000 },
+    { n: "✦ Hallow Scythe / Dark Dagger", p: 15000 },
+    { n: "✦ Shark Anchor (Full)", p: 30000 },
+    { n: "✦ Rip Indra / Dough King / DB", p: 10000 },
+    { n: "✦ Saber / Rengoku / Koko", p: 5000 },
+
+    // --- RAID & MASTERY ---
+    { n: "💥 RAID & MASTERY SERVICE", p: 0, header: true },
+    { n: "✦ Mastery Fruit/Sword/FS (per 100)", p: 5000 },
+    { n: "✦ Mastery Max (600 Mastery)", p: 0 },
+    { n: "✦ Raid Biasa (Max Awakening)", p: 5000 },
+    { n: "✦ Raid Buddha / Dough (Max)", p: 10000 },
+    { n: "✦ Unlock Phoenix Raid Quest", p: 0 },
+
+    // --- RACE & V4 ---
+    { n: "🧬 RACE SERVICE (V1 - V4)", p: 0, header: true },
+    { n: "✦ Unlock Ghoul / Cyborg", p: 15000 },
+    { n: "✦ Race V1 – V3 (All Race)", p: 8000 },
+    { n: "✦ Find Mirage Island (Blue Gear)", p: 10000 },
+    { n: "✦ Race V4 Unlock (Tier 1)", p: 10000 },
+    { n: "✦ Race V4 Full Tier (Tier 10)", p: 0 },
+
+    // --- DRACO (PREMIUM) ---
+    { n: "🔱 RACE DRACO (PREMIUM)", p: 0, header: true },
+    { n: "✦ Draco (Full)", p: 20000 },
+    { n: "✦ Draco V1 – V3", p: 10000 },
+    { n: "✦ Draco V4 (Full Gear)", p: 15000 },
+
+    // --- SEA EVENTS & MATERIALS ---
+    { n: "🌋 SEA EVENTS & MATERIALS", p: 0, header: true },
+    { n: "✦ Leviathan Heart / Scale", p: 45000 },
+    { n: "✦ Terror Shark Hunt (Eyes/Tooth)", p: 0 },
+    { n: "✦ Azure Ember Farming (Kitsune)", p: 0 },
+    { n: "✦ Kitsune Mask / Ribbon", p: 0 },
+    { n: "✦ Bones / Ectoplasm Farming", p: 0 },
+    { n: "✦ Dragon Heart / Storm", p: 20000 },
+    { n: "✦ TOTS (Tyrant Of The Sky)", p: 5000 }
 ];
 
 let subtotal = 0, selectedPay = "", currentTid = "", discount = 0;
@@ -182,5 +257,6 @@ document.getElementById('togglePassword').onclick = function() {
     p.type = p.type === 'password' ? 'text' : 'password';
     this.classList.toggle('fa-eye-slash');
 };
+
 
 window.onload = init;
