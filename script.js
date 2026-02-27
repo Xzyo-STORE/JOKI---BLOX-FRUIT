@@ -142,7 +142,11 @@ function hitung() {
 
 function applyVoucher() {
     const code = document.getElementById('vouchCode').value.toUpperCase();
-    const daftarVoucher = { "R3Z4": 0.20, "RAF4": 0.15, "F4HR1": 0.15, "FEB2026": 0.15 };
+    const daftarVoucher = { "R3Z4": 0.20, 
+                           "RAF4": 0.15, 
+                           "F4HR1": 0.15, 
+                           "FEB2026": 0.15 };
+    
     if (daftarVoucher[code] !== undefined) {
         discount = daftarVoucher[code];
         alert(`✅ Voucher Berhasil! Diskon ${discount * 100}%`);
@@ -180,34 +184,44 @@ async function prosesPesanan() {
     const tot = document.getElementById('totalAkhir').innerText;
 
     try {
-        // Simpan ke Firebase
+        // 1. Simpan ke Firebase
         await db.ref('orders/' + currentTid).set({
             tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
         });
 
-        // Langsung kirim backup ke FormSubmit (Email)
+        // 2. Kirim backup ke FormSubmit (Email)
         kirimFormSubmit(currentTid, u, p, w, itm, tot);
 
-        // Pindah Slide & Tampilkan Instruksi
         setTimeout(() => {
             loader.style.display = 'none';
             switchSlide(1, 2);
+
             document.getElementById('payNominal').innerText = tot;
             document.getElementById('displayTid').innerText = currentTid;
 
-            const qrisDisplay = document.getElementById('qris-display');
+            const qrisBox = document.getElementById('qris-display');
             const infoTeks = document.getElementById('payMethodInfo');
+            const fotoQR = document.getElementById('gambar-qris');
+
+            // --- LOGIKA PEMBEDA NOMOR (DANA BEDA SENDIRI) ---
+            qrisBox.style.setProperty('display', 'none', 'important'); // Sembunyikan QR dulu
 
             if (selectedPay === "QRIS") {
-                infoTeks.innerText = "SILAKAN SCAN QRIS DI BAWAH";
-                qrisDisplay.style.display = "block";
-            } else {
-                qrisDisplay.style.display = "none";
-                infoTeks.innerText = `${selectedPay}: 089677323404 (A/N REZA)`;
+                infoTeks.innerText = "SCAN QRIS XZYO STORE";
+                qrisBox.style.setProperty('display', 'block', 'important');
+                fotoQR.src = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
+            } 
+            else if (selectedPay === "DANA") {
+                // Nomor DANA yang beda sendiri
+                infoTeks.innerText = "DANA: 089677323404";
+            } 
+            else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
+                // Nomor OVO & GOPAY (Nomornya Sama)
+                infoTeks.innerText = selectedPay + ": 089517154561";
             }
         }, 1200);
 
-        // Listener jika Admin ACC di Firebase
+        // 3. Pantau status jika Admin ACC di Firebase
         db.ref('orders/' + currentTid + '/status').on('value', snap => {
             if(snap.val() === 'success') {
                 tampilkanSlide3(currentTid, u, itm, tot);
@@ -253,3 +267,4 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
