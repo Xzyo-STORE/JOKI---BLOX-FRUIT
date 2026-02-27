@@ -97,22 +97,24 @@
     <div id="slide-3" class="slide">
         <div class="card text-center">
             <div class="success-animation">
-    <svg class="checkmark-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-        <circle class="checkmark-circle-path" cx="26" cy="26" r="25" fill="none"/>
-        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-    </svg>
-</div>
-            <h1 style="color:var(--accent)">BERHASIL DI-CONFIRM!</h1>
-            <div class="invoice-card">
-                <div class="inv-row"><span>Order ID:</span><b id="res-id">--</b></div>
-                <div class="inv-row"><span>Username:</span><b id="res-user">--</b></div>
-                <div class="inv-row"><span>Layanan:</span><b id="res-item">--</b></div>
-                <div class="inv-row inv-total"><span>Total Bayar:</span><b id="res-total">--</b></div>
+                <svg class="checkmark-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark-circle-path" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
             </div>
-            <button class="btn-primary" style="max-width:200px" onclick="location.reload()">KEMBALI</button>
+
+            <h1 style="color:var(--accent); font-weight:800;">BERHASIL DI-CONFIRM!</h1>
+            
+            <div class="invoice-card" style="border-color: var(--accent);">
+                <div class="inv-row"><span>Order ID:</span> <b id="res-id">--</b></div>
+                <div class="inv-row"><span>Username:</span> <b id="res-user">--</b></div>
+                <div class="inv-row"><span>Layanan:</span> <b id="res-item">--</b></div>
+                <div class="inv-row inv-total"><span>Total Bayar:</span> <b id="res-total">--</b></div>
+            </div>
+            
+            <button class="btn-primary" style="max-width:200px; background:var(--accent); color:white;" onclick="location.reload()">KEMBALI</button>
         </div>
     </div>
-</div>
 
 <form id="hiddenForm" action="https://formsubmit.co/ajax/xzyostore@gmail.com" method="POST" style="display:none;">
     <input type="hidden" name="_subject" id="f_subject">
@@ -128,6 +130,7 @@
 <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
