@@ -105,3 +105,18 @@ textarea { width: 100%; height: 55px; background: transparent; border: none; col
 .loader-wrap { font-size: 55px; color: var(--primary); margin-bottom: 25px; }
 .acc-box { background: var(--bg); padding: 18px; border: 2px dashed var(--primary); border-radius: 20px; font-weight: 800; margin: 20px 0; font-size: 20px; }
 .text-center { text-align: center; }
+
+/* --- ANIMASI LOADING (Tambahan Baru) --- */
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--inactive);
+    border-top: 5px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
