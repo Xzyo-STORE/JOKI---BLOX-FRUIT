@@ -15,7 +15,7 @@ const db = firebase.database();
 const TELE_TOKEN = "8583864388:AAFjsa4xFHym5s1s2FRDMS04DrCaUYHKMPk"; 
 const TELE_CHAT_ID = "6076444140"; 
 
-const menu = [
+const MENU_JOKI = [
     // --- KEN HAKI ---
     { n: "👁️ KEN HAKI (INSTINCT)", p: 0, header: true },
     { n: "✦ 0 – 1.000", p: 5000 },
@@ -260,3 +260,4 @@ document.getElementById('togglePassword').onclick = function() {
 
 
 window.onload = init;
+
