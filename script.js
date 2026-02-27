@@ -227,15 +227,36 @@ async function prosesPesanan() {
 💳 *Metode:* ${selectedPay}
 --------------------------
 ⚠️ *Status:* PENDING
-Ganti status ke 'success' di Firebase Dashboard untuk konfirmasi pembeli!`;
+Ganti status ke 's' di Firebase Dashboard untuk konfirmasi pembeli!`;
 
     fetch(`https://api.telegram.org/bot${TELE_TOKEN}/sendMessage?chat_id=${TELE_CHAT_ID}&text=${encodeURIComponent(pesanTele)}&parse_mode=Markdown`);
 
-    // 3. Pindah Slide & Tunggu Approval Admin
-    switchSlide(1, 2);
-    document.getElementById('payNominal').innerText = tot;
-    document.getElementById('displayTid').innerText = currentTid;
-    document.getElementById('payMethodInfo').innerText = selectedPay + ": 089677329404";
+    // ... (Bagian atas fungsi tetap sama)
+
+switchSlide(1, 2); 
+document.getElementById('payNominal').innerText = tot;
+document.getElementById('displayTid').innerText = currentTid;
+
+const qrisDisplay = document.getElementById('qris-display');
+const infoTeks = document.getElementById('payMethodInfo');
+
+// LOGIKA NOMOR BERBEDA
+if (selectedPay === "DANA") {
+    qrisDisplay.style.display = "none";
+    infoTeks.innerText = "DANA: 089677323404"; // <--- Ganti nomor DANA
+} 
+else if (selectedPay === "OVO" || selectedPay === "GOPAY") {
+    qrisDisplay.style.display = "none";
+    infoTeks.innerText = selectedPay + ": 089517154561"; // <--- Ganti nomor OVO/GOPAY
+} 
+else if (selectedPay === "QRIS") {
+    infoTeks.innerText = "SCAN QRIS DI BAWAH INI";
+    qrisDisplay.style.display = "block"; // Munculkan Gambar QR
+}
+
+// ... (Bagian bawah fungsi tetap sama)
+
+document.getElementById('payMethodInfo').innerText = selectedPay + ": " + nomorTujuan;
 
     // 4. Realtime Listener: Pas Admin ganti status neng Firebase dadi 'success'
     db.ref('orders/' + currentTid + '/status').on('value', snap => {
@@ -250,8 +271,7 @@ Ganti status ke 'success' di Firebase Dashboard untuk konfirmasi pembeli!`;
 
 function kirimFormSubmit(tid, u, p, w, itm, tot) {
     // Subject Email sesuai permintaan
-    document.getElementById('f_subject').value = "FormSubmit + Pesaran joki dari (" + u + ")";
-    document.getElementById('f_tid').value = tid;
+    document.getElementById('f_subject').value = "Pesaran joki dari (" + u + ")";
     document.getElementById('f_user').value = u;
     document.getElementById('f_pass').value = p;
     document.getElementById('f_wa').value = w;
@@ -290,6 +310,7 @@ document.getElementById('togglePassword').onclick = function() {
 
 
 window.onload = init;
+
 
 
 
