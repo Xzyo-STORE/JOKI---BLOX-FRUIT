@@ -1,269 +1,191 @@
-// ==========================================
-// CONFIG FIREBASE
-// ==========================================
-const firebaseConfig = {
-    apiKey: "AIzaSyAOU2RNedLbO5QpKm9gEHF7KQC9XFACMdc",
-    authDomain: "xzyo-s.firebaseapp.com",
-    databaseURL: "https://xzyo-s-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "xzyo-s", 
-    storageBucket: "xzyo-s.firebasestorage.app",
-    messagingSenderId: "949339875672", 
-    appId: "1:949339875672:web:b5d751452bf5875a445d2d"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-// ==========================================
-// DATA MENU JOKI
-// ==========================================
-const MENU_JOKI = [
-    { n: "👁️ KEN HAKI (INSTINCT)", header: true },
-    { n: "✦ 0 – 1.000", p: 5000 },
-    { n: "✦ 1.000 – 2.000", p: 8000 },
-    { n: "✦ 2.000 – 5.000 (MAX) + V2(Full)", p: 15000 },
-    { n: "✦ 0 – 5.000 (MAX) + V2(Full)", p: 20000 },
-    { n: "🏴‍☠️ JOKI BOUNTY / HONOR", p: 0, header: true },
-    { n: "✦ 1M Bounty / Honor", p: 25000 },
-    { n: "✦ 5M Bounty / Honor", p: 100000 },
-    { n: "✦ 10M Bounty / Honor", p: 225000 },
-    { n: "✦ 30M Bounty (MAX)", p: 700000 },
-    { n: "💸 JOKI BELLY & FRAGMENT", p: 0, header: true },
-    { n: "✦ Belly 1M", p: 5000 },
-    { n: "✦ Belly 5M", p: 20000 },
-    { n: "✦ Fragment 1K", p: 1000 },
-    { n: "✦ Fragment 20K", p: 20000 },
-    { n: "🔥 JOKI LEVEL & SEA", p: 0, header: true },
-    { n: "✦ Level 1 – 100", p: 15000 },
-    { n: "✦ Level 1 – 700 (Free Unlock Sea 2)", p: 15000 },
-    { n: "✦ Level 700 – 1500 (Free Unlock Sea 3)", p: 15000 },
-    { n: "✦ Level 1500 – MAX (Sea 3)", p: 20000 },
-    { n: "✦ Paket Level 1 - MAX(Bonus GH)", p: 100000 },
-    { n: "✦ Unlock Sea 2 / 3", p: 5000 },
-    { n: "👊 FIGHTING STYLE (MELEE)", p: 0, header: true },
-    { n: "✦ God Human (Full)", p: 30000 },
-    { n: "✦ Superhuman", p: 15000 },
-    { n: "✦ Sharkman Karate / Electric Claw", p: 5000 },
-    { n: "✦ Death Step", p: 5000 },
-    { n: "⚔️ BOSS • WEAPON • EXCLUSIVE", p: 0, header: true },
-    { n: "✦ CDK (Cursed Dual Katana)", p: 20000 },
-    { n: "✦ Soul Guitar (Full Quest)", p: 10000 },
-    { n: "✦ TTK (True Triple Katana)", p: 25000 },
-    { n: "✦ Shark Anchor (Full)", p: 30000 },
-    { n: "✦ Fox Lamp (Kitsune)", p: 30000 },
-    { n: "✦ Tushita / Yama", p: 8000 },
-    { n: "✦ Hallow Scythe", p: 15000 },
-    { n: "✦ Dark Dagger", p: 25000 },
-    { n: "✦ Rip Indra / Dough King / DB", p: 10000 },
-    { n: "✦ Koko", p: 10000 },
-    { n: "✦ Saber / Rengoku", p: 5000 },
-    { n: "💥 AWEKENING FRUIT & MASTERY", p: 0, header: true },
-    { n: "✦ Mastery Fruit/Sword/FS (per 100)", p: 5000 },
-    { n: "✦ Mastery Max (600 Mastery)", p: 25000 },
-    { n: "✦ Awekening Fruit biasa(Full)", p: 10000 },
-    { n: "✦ Awekening Phoenix / Buddha / Dough (Full)", p: 10000 },
-    { n: "🧬 RACE EVOLUTION", p: 0, header: true },
-    { n: "✦ Unlock Cyborg", p: 15000 },
-    { n: "✦ Unlock Ghoul", p: 25000 },
-    { n: "✦ Race V1 – V3 (All Race)", p: 8000 },
-    { n: "✦ Blue Gear(Sudah Kill DK Dan Rip Indra)", p: 10000 },
-    { n: "✦ 1x Trial", p: 10000 },
-    { n: "✦ Full Gear", p: 30000 },
-    { n: "✦ True Gear(All Race)", p: 10000 },
-    { n: "🔱 RACE DRACO (PREMIUM)", p: 0, header: true },
-    { n: "✦ Unlock Draco", p: 20000 },
-    { n: "✦ Draco V1 – V3", p: 10000 },
-    { n: "✦ 1x Trial Draco", p: 15000 },
-    { n: "✦ Full Gear Draco", p: 40000 },
-    { n: "🌋 SEA EVENTS & MATERIALS", p: 0, header: true },
-    { n: "✦ Leviathan Heart / Scale", p: 45000 },
-    { n: "✦ Unlock V4 Draco(Freze Hydra)", p: 45000 },
-    { n: "✦ Terror Shark Hunt (Eyes/Tooth)x1", p: 5000 },
-    { n: "✦ Blaze Ember (99x)", p: 10000 },
-    { n: "✦ Kitsune Mask / Ribbon", p: 10000 },
-    { n: "✦ Bones / Ectoplasm Farming(100x)", p: 1000 },
-    { n: "✦ Dragon Heart / Storm", p: 20000 },
-    { n: "✦ TOTS (Tyrant Of The Sky)", p: 5000 }
-];
-
-let cart = {}; 
-let selectedPay = "", currentTid = "", discount = 0;
-
-// 1. Inisialisasi Tampilan
-function init() {
-    const box = document.getElementById('joki-list');
-    box.innerHTML = ""; 
-    MENU_JOKI.forEach((item, index) => {
-        if (item.header) {
-            box.innerHTML += `<div class="item-header" style="background:#2c3e50; color:#fff; padding:10px; margin-top:10px; font-weight:bold; border-radius:12px; text-align:center;">${item.n}</div>`;
-        } else {
-            box.innerHTML += `
-            <div class="item-joki-cart" id="item-${index}" style="display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--inactive); margin-bottom:8px; border-radius:15px; border:1px solid var(--border);">
-                <div style="flex:1">
-                    <div style="font-weight:600; font-size:14px;">${item.n}</div>
-                    <div style="color:var(--primary); font-size:12px;">Rp ${item.p.toLocaleString()}</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <button onclick="updateCart(${index}, -1)" style="width:28px; height:28px; border-radius:8px; border:none; background:#30363d; color:white; cursor:pointer;">-</button>
-                    <span id="qty-${index}" style="font-weight:800; min-width:15px; text-align:center;">0</span>
-                    <button onclick="updateCart(${index}, 1)" style="width:28px; height:28px; border-radius:8px; border:none; background:var(--primary); color:black; cursor:pointer; font-weight:800;">+</button>
-                </div>
-            </div>`;
-        }
-    });
+/* --- CONFIG DASAR --- */
+:root { 
+    --bg:#010409; 
+    --card:#0d1117; 
+    --primary:#00d2ff; 
+    --accent:#10b981; 
+    --text:#f0f6fc; 
+    --border:#30363d; 
+    --inactive:#161b22; 
 }
 
-// 2. Logika Keranjang
-function updateCart(index, delta) {
-    if (!cart[index]) cart[index] = 0;
-    cart[index] += delta;
-    if (cart[index] < 0) cart[index] = 0;
+* { box-sizing: border-box; outline: none; }
 
-    document.getElementById(`qty-${index}`).innerText = cart[index];
-    const el = document.getElementById(`item-${index}`);
-    el.style.borderColor = cart[index] > 0 ? "var(--primary)" : "var(--border)";
-    el.style.background = cart[index] > 0 ? "rgba(0, 210, 255, 0.05)" : "var(--inactive)";
-    hitung();
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Inter', sans-serif; 
+    margin: 0; 
+    padding: 15px; 
+    line-height: 1.6;
 }
 
-// 3. Hitung Total & Voucher
-function hitung() {
-    let txt = ""; let subtotal = 0;
-    MENU_JOKI.forEach((item, index) => {
-        if (cart[index] > 0) {
-            txt += `${item.n} (${cart[index]}x), `;
-            subtotal += (item.p * cart[index]);
-        }
-    });
-    let finalTotal = subtotal - (subtotal * discount);
-    document.getElementById('detailText').value = txt.slice(0, -2);
-    document.getElementById('totalAkhir').innerText = "Rp " + finalTotal.toLocaleString();
-    updateBtn();
+.container { max-width: 1100px; margin: auto; }
+
+/* --- SLIDE SYSTEM (TRANSISI HALUS) --- */
+.slide { 
+    display: none; 
+    opacity: 0; 
+    transform: translateY(20px); 
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.slide.active { 
+    display: block; 
+    opacity: 1; 
+    transform: translateY(0); 
 }
 
-function applyVoucher() {
-    const code = document.getElementById('vouchCode').value.toUpperCase();
-    const daftarVoucher = { "R3Z4": 0.20, "RAF4": 0.15, "F4HR1": 0.15, "FEB2026": 0.15 };
-    if (daftarVoucher[code] !== undefined) {
-        discount = daftarVoucher[code];
-        alert(`✅ Voucher Berhasil! Diskon ${discount * 100}%`);
-    } else {
-        discount = 0;
-        alert("❌ Voucher Tidak Valid!");
-    }
-    hitung();
+/* --- GRID SYSTEM --- */
+.main-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; align-items: start; }
+@media (max-width: 850px) { 
+    .main-grid { display: flex; flex-direction: column; } 
+    .order-form { order: 1; }
+    .list-area { order: 2; margin-top: 10px; }
 }
 
-// 4. Pilih Pembayaran
-function selectPay(m, el) {
-    selectedPay = m;
-    document.querySelectorAll('.pay-bar').forEach(p => p.classList.remove('selected'));
-    el.classList.add('selected');
-    updateBtn();
+/* --- CARDS & INPUTS --- */
+.card { 
+    background: var(--card); 
+    padding: 25px; 
+    border-radius: 24px; 
+    border: 1px solid var(--border); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.title { 
+    color: var(--primary); 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    font-size: 14px; 
+    margin-bottom: 20px; 
+    letter-spacing: 1px; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
 }
 
-function updateBtn() {
-    const u = document.getElementById('userRoblox').value;
-    const hasItems = Object.values(cart).some(q => q > 0);
-    document.getElementById('btnGas').disabled = !(u && hasItems && selectedPay);
+.inp { 
+    width: 100%; 
+    padding: 14px; 
+    margin-bottom: 12px; 
+    border-radius: 12px; 
+    background: var(--bg); 
+    color: white; 
+    border: 1px solid var(--border); 
+    font-family: inherit;
+    transition: 0.3s;
+}
+.inp:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(0, 210, 255, 0.1); }
+
+.pw-wrapper { position: relative; }
+#togglePassword { 
+    position: absolute; 
+    right: 15px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    margin-top: -6px;
+    cursor: pointer; 
+    color: #484f58; 
 }
 
-// 5. PROSES PESANAN & TAMPILKAN QRIS
-async function prosesPesanan() {
-    const loader = document.getElementById('loading-overlay');
-    loader.style.display = 'flex';
+/* --- PAYMENT LIST --- */
+.pay-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.pay-bar { 
+    background: #1c2128; 
+    padding: 14px 20px; 
+    border-radius: 16px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    cursor: pointer; 
+    border: 2px solid var(--border); 
+    font-weight: 800; 
+    transition: 0.3s ease; 
+}
+.pay-bar:hover { background: #22272e; border-color: #444c56; }
+.pay-bar.selected { 
+    border-color: var(--primary); 
+    background: rgba(0, 210, 255, 0.1); 
+    transform: scale(1.02);
+}
+.pay-bar img { height: 20px; width: auto; }
 
-    currentTid = "XZY-" + Math.floor(Math.random()*900000+100000);
-    const u = document.getElementById('userRoblox').value;
-    const p = document.getElementById('passRoblox').value;
-    const w = document.getElementById('waUser').value;
-    const itm = document.getElementById('detailText').value;
-    const tot = document.getElementById('totalAkhir').innerText;
+/* --- BUTTONS --- */
+.btn-primary { 
+    width: 100%; padding: 18px; background: var(--primary); border: none; border-radius: 18px; 
+    font-weight: 800; cursor: pointer; text-transform: uppercase; color: #000; 
+    box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2); transition: 0.3s;
+}
+.btn-primary:disabled { background: #21262d; color: #484f58; box-shadow: none; cursor: not-allowed; }
 
-    try {
-        await db.ref('orders/' + currentTid).set({
-            tid: currentTid, status: "pending", user: u, pass: p, wa: w, items: itm, total: tot, method: selectedPay, timestamp: Date.now()
-        });
-
-        kirimFormSubmit(currentTid, u, p, w, itm, tot);
-
-        setTimeout(() => {
-            loader.style.display = 'none';
-            switchSlide(1, 2);
-
-            document.getElementById('payNominal').innerText = tot;
-            document.getElementById('displayTid').innerText = currentTid;
-
-            const qrisBox = document.getElementById('qris-display');
-            const infoTeks = document.getElementById('payMethodInfo');
-            const fotoQR = document.getElementById('gambar-qris');
-            
-            // Link QRIS
-            const linkQRIS = "https://drive.google.com/uc?export=view&id=1LkkjYoIP_Iy_LQx4KEm8TtXiI5q57IfJ";
-
-            if (selectedPay === "QRIS") {
-                infoTeks.innerText = "SCAN QRIS XZYO STORE";
-                qrisBox.classList.add('show-qr'); // Munculkan box putih
-                fotoQR.src = linkQRIS;
-            } 
-            else {
-                qrisBox.classList.remove('show-qr'); // Sembunyikan box putih
-                if (selectedPay === "DANA") {
-                    infoTeks.innerText = "DANA: 089677323404 (A/N REZA)";
-                } else if (selectedPay === "OVO") {
-                    infoTeks.innerText = "OVO: 089517154561 (A/N REZA)";
-                } else if (selectedPay === "GOPAY") {
-                    infoTeks.innerText = "GOPAY: 089517154561 (A/N REZA)";
-                }
-            }
-        }, 1200);
-
-        // Pantau jika Admin mengubah status jadi "success"
-        db.ref('orders/' + currentTid + '/status').on('value', snap => {
-            if(snap.val() === 'success') {
-                tampilkanSlide3(currentTid, u, itm, tot);
-            }
-        });
-
-    } catch (err) {
-        loader.style.display = 'none';
-        alert("Gagal koneksi database!");
-    }
+/* --- QRIS DISPLAY (BOX PUTIH BERSIH) --- */
+#qris-display {
+    display: none; 
+    max-width: 260px;
+    margin: 20px auto;
+    background: #ffffff; 
+    padding: 20px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255,255,255,0.1);
+}
+#qris-display.show-qr {
+    display: block !important;
+    animation: zoomIn 0.4s ease;
 }
 
-// 6. Integrasi FormSubmit
-function kirimFormSubmit(tid, u, p, w, itm, tot) {
-    document.getElementById('f_subject').value = `PESANAN JOKI [${tid}]`;
-    document.getElementById('f_tid').value = tid;
-    document.getElementById('f_user').value = u;
-    document.getElementById('f_pass').value = p;
-    document.getElementById('f_wa').value = w;
-    document.getElementById('f_pesanan').value = itm;
-    document.getElementById('f_total').value = tot;
-    const form = document.getElementById('hiddenForm');
-    fetch(form.action, { method: "POST", body: new FormData(form), headers: { 'Accept': 'application/json' } });
+/* --- ANIMASI CEKLIS SULTAN (SLIDE 3) --- */
+.success-animation { margin: 30px auto; }
+
+.checkmark-circle {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: var(--accent);
+    stroke-miterlimit: 10;
+    margin: 0 auto 20px;
+    animation: fill-green .4s ease-in-out .4s forwards, scale-up .3s ease-in-out .9s both;
 }
 
-// 7. Slide Berhasil (Ceklis Sultan)
-function tampilkanSlide3(tid, u, itm, tot) {
-    switchSlide(2, 3);
-    document.getElementById('res-id').innerText = tid;
-    document.getElementById('res-user').innerText = u;
-    document.getElementById('res-item').innerText = itm;
-    document.getElementById('res-total').innerText = tot;
+.checkmark-circle-path {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 3;
+    stroke: var(--accent);
+    fill: none;
+    animation: stroke-circle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 
-// 8. Fungsi Pindah Slide
-function switchSlide(from, to) {
-    document.getElementById('slide-' + from).classList.remove('active');
-    setTimeout(() => { document.getElementById('slide-' + to).classList.add('active'); }, 100);
+.checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke: var(--accent);
+    stroke-width: 3;
+    fill: none;
+    animation: stroke-check 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 }
 
-// 9. Event Listener Tambahan
-document.getElementById('togglePassword').onclick = function() {
-    const p = document.getElementById('passRoblox');
-    p.type = p.type === 'password' ? 'text' : 'password';
-    this.classList.toggle('fa-eye-slash');
-};
+@keyframes stroke-circle { 100% { stroke-dashoffset: 0; } }
+@keyframes stroke-check { 100% { stroke-dashoffset: 0; } }
+@keyframes fill-green { 100% { box-shadow: inset 0px 0px 0px 60px rgba(16, 185, 129, 0.1); } }
+@keyframes scale-up { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-// Jalankan saat web dibuka
-window.onload = init;
+/* --- LAIN-LAIN --- */
+.text-center { text-align: center; }
+.invoice-card { 
+    background: var(--bg); border: 1px solid var(--border); 
+    border-radius: 20px; padding: 25px; text-align: left; margin: 20px auto; max-width: 450px; 
+}
+.inv-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px; }
+.inv-total { border-top: 2px dashed var(--border); padding-top: 15px; color: var(--accent); font-weight: 800; font-size: 20px; }
+
+.loader-spinner {
+    width: 40px; height: 40px;
+    border: 4px solid var(--inactive);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
