@@ -23,10 +23,14 @@ const MENU_JOKI = [
     { n: "✦ 2.000 – 5.000 (MAX) + V2(Full)", p: 15000 },
     { n: "✦ 0 – 5.000 (MAX) + V2(Full)", p: 20000 },
     { n: "🏴‍☠️ JOKI BOUNTY / HONOR", p: 0, header: true },
-    { n: "✦ 1M Bounty / Honor", p: 25000 },
-    { n: "✦ 5M Bounty / Honor", p: 100000 },
-    { n: "✦ 10M Bounty / Honor", p: 225000 },
+    { n: "✦ 1M Bounty", p: 25000 },
+    { n: "✦ 5M Bounty", p: 100000 },
+    { n: "✦ 10M Bounty", p: 225000 },
     { n: "✦ 30M Bounty (MAX)", p: 700000 },
+    { n: "✦ 1M Honor", p: 25000 },
+    { n: "✦ 5M Honor", p: 100000 },
+    { n: "✦ 10M Honor", p: 225000 },
+    { n: "✦ 30M Honor (MAX)", p: 700000 },
     { n: "💸 JOKI BELLY & FRAGMENT", p: 0, header: true },
     { n: "✦ Belly 1M", p: 5000 },
     { n: "✦ Belly 5M", p: 20000 },
@@ -274,6 +278,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
