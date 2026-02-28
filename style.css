@@ -33,14 +33,14 @@ body {
 
 /* --- SLIDE SYSTEM --- */
 .slide { 
-    display: none; 
+    display: none; /* Sembunyikan semua slide secara default */
     opacity: 0; 
     transform: translateY(20px); 
     transition: 0.5s ease; 
 }
 
 .slide.active { 
-    display: block !important; 
+    display: block !important; /* Paksa muncul hanya yang ada class 'active' */
     opacity: 1; 
     transform: translateY(0); 
 }
@@ -312,3 +312,4 @@ textarea {
 @keyframes stroke { 100% { stroke-dashoffset: 0; } }
 
 .text-center { text-align: center; }
+
