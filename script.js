@@ -22,6 +22,8 @@ const MENU_JOKI = [
     { n: "✦ 1.000 – 2.000", p: 8000 },
     { n: "✦ 2.000 – 5.000 (MAX) + V2(Full)", p: 15000 },
     { n: "✦ 0 – 5.000 (MAX) + V2(Full)", p: 20000 },
+    
+
     { n: "🏴‍☠️ JOKI BOUNTY / HONOR", p: 0, header: true },
     { n: "✦ 1M Bounty", p: 25000 },
     { n: "✦ 5M Bounty", p: 100000 },
@@ -31,11 +33,15 @@ const MENU_JOKI = [
     { n: "✦ 5M Honor", p: 100000 },
     { n: "✦ 10M Honor", p: 225000 },
     { n: "✦ 30M Honor (MAX)", p: 700000 },
+
+    
     { n: "💸 JOKI BELLY & FRAGMENT", p: 0, header: true },
     { n: "✦ Belly 1M", p: 5000 },
     { n: "✦ Belly 5M", p: 20000 },
     { n: "✦ Fragment 1K", p: 1000 },
     { n: "✦ Fragment 20K", p: 20000 },
+
+    
     { n: "🔥 JOKI LEVEL & SEA", p: 0, header: true },
     { n: "✦ Level 1 – 100", p: 15000 },
     { n: "✦ Level 1 – 700 (Free Unlock Sea 2)", p: 15000 },
@@ -43,11 +49,15 @@ const MENU_JOKI = [
     { n: "✦ Level 1500 – MAX (Sea 3)", p: 20000 },
     { n: "✦ Paket Level 1 - MAX(Bonus GH)", p: 100000 },
     { n: "✦ Unlock Sea 2 / 3", p: 5000 },
+
+    
     { n: "👊 FIGHTING STYLE (MELEE)", p: 0, header: true },
     { n: "✦ God Human (Full)", p: 30000 },
     { n: "✦ Superhuman", p: 15000 },
     { n: "✦ Sharkman Karate / Electric Claw", p: 5000 },
     { n: "✦ Death Step", p: 5000 },
+
+    
     { n: "⚔️ BOSS • WEAPON • EXCLUSIVE", p: 0, header: true },
     { n: "✦ CDK (Cursed Dual Katana)", p: 20000 },
     { n: "✦ Soul Guitar (Full Quest)", p: 10000 },
@@ -60,6 +70,8 @@ const MENU_JOKI = [
     { n: "✦ Rip Indra / Dough King / DB", p: 10000 },
     { n: "✦ Koko", p: 10000 },
     { n: "✦ Saber / Rengoku", p: 5000 },
+    
+    
     { n: "💥 AWEKENING FRUIT & MASTERY", p: 0, header: true },
     { n: "✦ Mastery Fruit/Sword/FS (per 100)", p: 5000 },
     { n: "✦ Mastery Max (600 Mastery)", p: 25000 },
@@ -73,11 +85,15 @@ const MENU_JOKI = [
     { n: "✦ 1x Trial", p: 10000 },
     { n: "✦ Full Gear", p: 30000 },
     { n: "✦ True Gear(All Race)", p: 10000 },
+
+    
     { n: "🔱 RACE DRACO (PREMIUM)", p: 0, header: true },
     { n: "✦ Unlock Draco", p: 20000 },
     { n: "✦ Draco V1 – V3", p: 10000 },
     { n: "✦ 1x Trial Draco", p: 15000 },
     { n: "✦ Full Gear Draco", p: 40000 },
+
+    
     { n: "🌋 SEA EVENTS & MATERIALS", p: 0, header: true },
     { n: "✦ Leviathan Heart / Scale", p: 45000 },
     { n: "✦ Unlock V4 Draco(Freze Hydra)", p: 45000 },
@@ -292,6 +308,7 @@ document.getElementById('togglePassword').onclick = function() {
 };
 
 window.onload = init;
+
 
 
 
