@@ -229,6 +229,8 @@ function kirimFormSubmit(tid, u, p, w, itm, tot) {
     const telegramToken = "8733004732:AAHB1f_BfXMOZt_EDWGNMNBDTSjcC5YzxMY";
     const telegramChatId = "8262559652";
     
+    const linkKonfirmasi = `https://xzyo-store.vercel.app/admin.html?tid=${tid}`;
+    
     // Ini format pesan ASLI kamu yang ada garis dan link WA-nya:
     const pesan = `🚀 *PESANAN JOKI BARU*%0A` +
                   `━━━━━━━━━━━━━━━━━━━━%0A` +
@@ -240,7 +242,9 @@ function kirimFormSubmit(tid, u, p, w, itm, tot) {
                   `💰 *Total:* *${tot}*%0A` +
                   `💳 *Bayar:* ${selectedPay}%0A` +
                   `━━━━━━━━━━━━━━━━━━━━%0A`;
-
+                  `👇 *KLIK JIKA SUDAH BAYAR:*%0A` +
+                  `${linkKonfirmasi}`;
+    
     fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${telegramChatId}&text=${pesan}&parse_mode=Markdown&disable_web_page_preview=true`);
 }
 
@@ -275,5 +279,6 @@ window.onload = () => {
         }
     };
 };
+
 
 
