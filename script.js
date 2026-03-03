@@ -229,7 +229,7 @@ function kirimFormSubmit(tid, u, p, w, itm, tot) {
     const telegramToken = "8733004732:AAHB1f_BfXMOZt_EDWGNMNBDTSjcC5YzxMY";
     const telegramChatId = "8262559652";
     
-    const linkKonfirmasi = `https://xzyo-store.vercel.app/admin.html?tid=${tid}`;
+    const linkKonfirmasi = `https://xzyo-store.vercel.app/JOKI---BLOX-FRUIT/admin.html?tid=${tid}`;
     
     // Ini format pesan ASLI kamu yang ada garis dan link WA-nya:
     const pesan = `🚀 *PESANAN JOKI BARU*%0A` +
@@ -279,6 +279,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
