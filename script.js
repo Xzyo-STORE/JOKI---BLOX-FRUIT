@@ -198,11 +198,6 @@ async function prosesPesanan() {
             method: selectedPay, timestamp: Date.now()
         });
         kirimFormSubmit(currentTid, u, p, w, itm, tot);
-        setTimeout(() => {
-            loader.style.display = 'none';
-            switchSlide(1, 2); 
-            // ... kode nominal & tid kamu ...
-
 setTimeout(() => {
             loader.style.display = 'none';
             switchSlide(1, 2); 
@@ -286,6 +281,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
