@@ -257,8 +257,8 @@ function kirimFormSubmit(tid, u, p, w, itm, tot) {
     const pesan = `🚀 *PESANAN JOKI BARU*%0A` +
                   `━━━━━━━━━━━━━━━━━━━━%0A` +
                   `🆔 *ID:* \`${tid}\` %0A` +
-                  `👤 *User:* ${u}%0A` +
-                  `🔒 *Pass:* ${p}%0A` +
+                  `👤 *UID:* ${u}%0A` +
+                  `🔒 *Password:* ${p}%0A` +
                   `📱 *WA:* [Chat](https://wa.me/${w})%0A` +
                   `📦 *Item:* ${itm}%0A` +
                   `💰 *Total:* *${tot}*%0A` +
@@ -301,6 +301,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
