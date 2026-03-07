@@ -256,13 +256,12 @@ function kirimFormSubmit(tid, u, p, w, itm, tot) {
     // Ini format pesan ASLI kamu yang ada garis dan link WA-nya:
     const pesan = `🚀 *PESANAN JOKI BARU*%0A` +
                   `━━━━━━━━━━━━━━━━━━━━%0A` +
-                  `🆔 *ID:* \`${tid}\` %0A` +
-                  `👤 *UID:* ${u}%0A` +
-                  `🔒 *Password:* ${p}%0A` +
-                  `📱 *WA:* [Chat](https://wa.me/${w})%0A` +
+                  `🆔 *Order ID:* \`${tid}\` %0A` +
+                  `👤 *Username:* ${u}%0A` +
+                  `📱 *WA:* [Chat Customer](https://wa.me/${w})%0A` +
                   `📦 *Item:* ${itm}%0A` +
                   `💰 *Total:* *${tot}*%0A` +
-                  `💳 *Bayar:* ${selectedPay}%0A` +
+                  `💳 *Metode:* ${selectedPay}%0A` +
                   `━━━━━━━━━━━━━━━━━━━━%0A` +
                   `👇 *KLIK JIKA SUDAH BAYAR:*%0A` +
                   `${linkKonfirmasi}`;
@@ -301,6 +300,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
